@@ -4,6 +4,7 @@ import { GetUserDTO } from './dto/getUser.dto';
 import { DeleteUserDTO } from './dto/deleteUser.dto';
 import { UpdateUserDTO } from './dto/updateUser.dto';
 import { CreateUserDTO } from './dto/createUser.dto';
+import * as argon from 'argon2';
 
 @Injectable()
 export class UsersService {
@@ -24,8 +25,13 @@ export class UsersService {
   }
 
   async createUser(dto: CreateUserDTO) {
+    const hashedPassword = await argon.hash(dto.password);
+
     const user = await this.prisma.users.create({
-      data: dto,
+      data: {
+        hash_password: hashedPassword,
+        email: dto.email,
+      },
     });
     return user;
   }
