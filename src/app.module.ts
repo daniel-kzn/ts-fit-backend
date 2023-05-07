@@ -7,6 +7,9 @@ import { ReservationsModule } from './reservations/reservations.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { CoursesModule } from './courses/courses.module';
 import { RolesModule } from './roles/roles.module';
+import { SchedulesController } from './schedules/schedules.controller';
+import { SchedulesService } from './schedules/schedules.service';
+import { SchedulesModule } from './schedules/schedules.module';
 
 @Module({
   imports: [
@@ -20,6 +23,9 @@ import { RolesModule } from './roles/roles.module';
     SessionsModule,
     CoursesModule,
     RolesModule,
+    SchedulesModule,
   ],
+  controllers: [SchedulesController],
+  providers: [SchedulesService],
 })
 export class AppModule {}

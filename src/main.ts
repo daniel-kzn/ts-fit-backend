@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Test')
+    .setTitle('ts-fit API')
     .setDescription("Documentation de l'API ts-fit")
     .setVersion('1.0')
     .build();
