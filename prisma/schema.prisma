@@ -14,6 +14,8 @@ model Users {
   id            String    @id @default(uuid())
   created_at    DateTime  @default(now())
   updated_at    DateTime  @default(now())
+  subscribed    Boolean
+  subscribed_at DateTime
   hash_password String
   email         String    @unique
   role          Roles?    @relation(fields: [rolesId], references: [id])
@@ -28,4 +30,45 @@ model Roles {
   id    Int     @id @default(autoincrement())
   name  String
   Users Users[]
+}
+
+// Cours de Thai avec les membrees
+model Sessions {
+  id           Int      @id @default(autoincrement())
+  name         String
+  descriptions String
+  course_type  String
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+
+  Schedules Schedules[]
+}
+
+model Reservations {
+  id String @id @default(uuid())
+  //
+}
+
+// Cours de thai, boxe, karaté
+model Courses {
+  id           Int          @id @default(autoincrement())
+  name         String
+  descriptions String
+  type         CoursesTypes @relation(fields: [id], references: [id])
+}
+
+model CoursesTypes {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Courses Courses[]
+}
+
+// horaires de la session cours de boxe
+model Schedules {
+  id         String   @id @default(uuid())
+  session_id Sessions @relation(fields: [sessionsId], references: [id])
+  created_at DateTime @default(now())
+  start_at   DateTime
+  finish_at  DateTime
+  sessionsId Int
 }
