@@ -45,22 +45,23 @@ model Sessions {
 }
 
 model Reservations {
-  id String @id @default(uuid())
-  //
+  id                 String   @id @default(uuid())
+  user_id            String
+  schedule_id        String
+  reserved_at        DateTime @default(now())
+  reservation_status String
 }
 
 // Cours de thai, boxe, karaté
 model Courses {
-  id           Int          @id @default(autoincrement())
+  id           Int    @id @default(autoincrement())
   name         String
   descriptions String
-  type         CoursesTypes @relation(fields: [id], references: [id])
+  type         String
 }
 
 model CoursesTypes {
-  id      Int       @id @default(autoincrement())
-  name    String
-  Courses Courses[]
+  id Int @id @default(autoincrement())
 }
 
 // horaires de la session cours de boxe
