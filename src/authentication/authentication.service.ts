@@ -42,6 +42,9 @@ export class AuthenticationService {
         data: {
           email: dto.email,
           hash_password: hashedPassword,
+          first_name: dto.firstName,
+          last_name: dto.lastName,
+          sexe: dto.sexe,
         },
       });
       delete user.hash_password;
