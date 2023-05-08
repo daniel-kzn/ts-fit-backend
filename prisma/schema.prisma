@@ -14,16 +14,18 @@ model Users {
   id            String    @id @default(uuid())
   created_at    DateTime  @default(now())
   updated_at    DateTime  @default(now())
-  subscribed    Boolean
-  subscribed_at DateTime
-  hash_password String
+  subscribed    Boolean?
+  subscribed_at DateTime?
+  hash_password String?
   email         String    @unique
-  role          Roles?    @relation(fields: [rolesId], references: [id])
+  role          Roles?    @relation(fields: [role_id], references: [id])
+  role_id       Int?
   first_name    String?
   last_name     String?
   birthday      DateTime?
   sexe          String?
-  rolesId       Int?
+
+  Reservations Reservations[]
 }
 
 model Roles {
@@ -32,44 +34,51 @@ model Roles {
   Users Users[]
 }
 
-// Cours de Thai avec les membrees
-model Sessions {
-  id           Int      @id @default(autoincrement())
-  name         String
-  descriptions String
-  course_type  String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
+// Reservations d'un horaires
 
-  Schedules Schedules[]
-}
-
+// one-to-many
+// Une reversation peut avoir plusieurs horaires
 model Reservations {
-  id                 String   @id @default(uuid())
+  id                 String    @id @default(uuid())
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @default(now())
+  user               Users     @relation(fields: [user_id], references: [id])
   user_id            String
+  schedule           Schedules @relation(fields: [schedule_id], references: [id])
   schedule_id        String
-  reserved_at        DateTime @default(now())
+  reserved_at        DateTime  @default(now())
   reservation_status String
 }
 
 // Cours de thai, boxe, karaté
 model Courses {
-  id           Int    @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   name         String
   descriptions String
   type         String
+  sessions     Sessions[]
 }
 
-model CoursesTypes {
-  id Int @id @default(autoincrement())
+// Cours de Thai avec les membres
+model Sessions {
+  id           String      @id @default(uuid())
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @default(now())
+  name         String
+  descriptions String
+  course       Courses     @relation(fields: [course_id], references: [id])
+  course_id    Int
+  Schedules    Schedules[]
 }
 
 // horaires de la session cours de boxe
 model Schedules {
-  id         String   @id @default(uuid())
-  session_id Sessions @relation(fields: [sessionsId], references: [id])
-  created_at DateTime @default(now())
-  start_at   DateTime
-  finish_at  DateTime
-  sessionsId Int
+  id           String         @id @default(uuid())
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @default(now())
+  start_at     DateTime
+  finish_at    DateTime
+  session      Sessions       @relation(fields: [session_id], references: [id])
+  session_id   String
+  Reservations Reservations[]
 }

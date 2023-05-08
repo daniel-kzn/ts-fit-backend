@@ -28,7 +28,10 @@ export class AuthenticationService {
     const pwMatch = await argon.verify(user.hash_password, dto.password);
     if (!pwMatch) throw new ForbiddenException('Credential incorrect');
 
-    return this.signToken(user.id, user.email);
+    const token = await this.signToken(user.id, user.email);
+    delete user.hash_password;
+    const returnedUser = { ...user, ...token };
+    return returnedUser;
   }
 
   async singup(dto: SignUpDTO) {
