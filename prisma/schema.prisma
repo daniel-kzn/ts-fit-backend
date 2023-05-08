@@ -14,8 +14,6 @@ model Users {
   id            String    @id @default(uuid())
   created_at    DateTime  @default(now())
   updated_at    DateTime  @default(now())
-  subscribed    Boolean?
-  subscribed_at DateTime?
   hash_password String?
   email         String    @unique
   role          Roles?    @relation(fields: [role_id], references: [id])
@@ -24,6 +22,8 @@ model Users {
   last_name     String?
   birthday      DateTime?
   sexe          String?
+  subscribed    Boolean?
+  subscribed_at DateTime?
 
   Reservations Reservations[]
 }
