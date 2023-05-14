@@ -7,8 +7,8 @@ API REST d'app web
 - Nest : framework node
 - Prisma : ORM node
 
-- Argon : package npm pour crypter
-- nest-jwt : génération & gestion de jwt
+- [argon2](https://www.npmjs.com/package/argon2) : package npm pour crypter
+- [nestjs/jwt](https://www.npmjs.com/package/@nestjs/jwt) : génération & gestion de jwt
 - [nestjs/config](https://docs.nestjs.com/techniques/configuration) : config env file
 
 ## Installation & Lancement

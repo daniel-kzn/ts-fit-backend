@@ -11,13 +11,12 @@ datasource db {
 }
 
 model Users {
-  id            String    @id @default(uuid())
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @default(now())
+  id            String   @id @default(uuid())
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
   hash_password String?
-  email         String    @unique
-  role          Roles?    @relation(fields: [role_id], references: [id])
-  role_id       Int?
+  email         String   @unique
+
   first_name    String?
   last_name     String?
   birthday      DateTime?
@@ -26,15 +25,18 @@ model Users {
   subscribed_at DateTime?
 
   Reservations Reservations[]
+
+  role    Roles? @relation(fields: [role_id], references: [id])
+  role_id Int?
 }
 
 model Roles {
   id    Int     @id @default(autoincrement())
-  name  String
+  name  String  @unique
   Users Users[]
 }
 
-// Reservations d'un horaires
+// Reservations d'un horaire
 
 // one-to-many
 // Une reversation peut avoir plusieurs horaires
